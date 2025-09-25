@@ -8,10 +8,12 @@ public class Village {
 	private Chef chef;
 	private Gaulois[] villageois;
 	private int nbVillageois = 0;
+	private Marche marche;
 
-	public Village(String nom, int nbVillageoisMaximum) {
+	public Village(String nom, int nbVillageoisMaximum, int nbEtals) {
 		this.nom = nom;
 		villageois = new Gaulois[nbVillageoisMaximum];
+		marche = new Marche(nbEtals);
 	}
 
 	public String getNom() {
@@ -55,5 +57,75 @@ public class Village {
 			}
 		}
 		return chaine.toString();
+	}
+	
+	private static class Marche {
+		private Etal[] etals;
+		
+		private Marche(int nbEtals) {
+			etals = new Etal[nbEtals];
+			for(int i = 0; i<nbEtals; i++) {
+				etals[i] = new Etal();
+			}
+		}
+		
+		private void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
+			etals[indiceEtal].occuperEtal(vendeur, produit, nbProduit);
+		}
+		
+		private int trouverEtalLibre(){
+			for (int i = 0; i < etals.length; i++) {
+				if (!etals[i].isEtalOccupe()) { return i; }
+			}
+			return -1;
+		}
+		
+		private Etal[] trouverEtals(String produit) {
+			int nombreEtal = 0;
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].contientProduit(produit)) {
+					nombreEtal++;
+				}
+			}
+			Etal[] etalsAvecProduit = new Etal[nombreEtal];
+			int parcour = 0;
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].contientProduit(produit)) {
+					etalsAvecProduit[parcour] = etals[i];
+					parcour++;
+				}
+			}
+			return etalsAvecProduit;
+		}
+		
+		private Etal trouverVendeur(Gaulois gaulois) {
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].getVendeur() == gaulois) {
+					return etals[i];
+				}
+			}
+			return null;
+		}
+		
+		private String afficherMarche() {
+			StringBuilder chaine = new StringBuilder();
+			int etalsVide = 0; 
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].isEtalOccupe()) { 
+					chaine.append(etals[i].afficherEtal() + "\n");
+				} else {
+					etalsVide ++;
+				}
+			}
+			if (etalsVide != 0) {
+				chaine.append("Il reste " + etalsVide + "etals non utilises dans le marche. \n");
+			}
+			return chaine.toString();
+		}
+	}
+	
+	public String installerVendeur(Gaulois vendeur, String produit, int nbProduit) {
+		StringBuilder chaine = new StringBuilder();	
+		marche.utiliserEtal(marche.trouverEtalLibre(), vendeur, produit, nbProduit);
 	}
 }
