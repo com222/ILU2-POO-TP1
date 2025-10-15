@@ -3,9 +3,9 @@ package histoire;
 import personnages.Chef;
 import personnages.Druide;
 import personnages.Gaulois;
-import personnages.VillageSansChefException;
 import villagegaulois.Etal;
 import villagegaulois.Village;
+import villagegaulois.VillageSansChefException;
 
 public class ScenarioCasDegrade {
 	public static void main(String[] args) throws VillageSansChefException {
