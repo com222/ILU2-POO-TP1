@@ -12,7 +12,7 @@ public class ScenarioCasDegrade {
 		Village village = new Village("le village des irréductibles", 10, 5);
 		Chef abraracourcix = new Chef("Abraracourcix", 10, village);
 		
-//		System.out.println("test 4 :" + village.afficherVillageois());
+		System.out.println("test 4 :" + village.afficherVillageois());
 		
 		village.setChef(abraracourcix);
 
@@ -36,8 +36,18 @@ public class ScenarioCasDegrade {
 		
 		System.out.println("normal 2 : " + etalFleur.acheterProduit(10, abraracourcix));
 		System.out.println("test 2.1 : " + etalFleur.acheterProduit(10, null)); 
-//		System.out.println("test 2.2 : " + etalFleur.acheterProduit(-10, abraracourcix));
-//		System.out.println("test 2.3 : " + etalTest3.acheterProduit(10, abraracourcix));
+		System.out.println("test 2.2 :");
+		try {
+			System.out.println(etalFleur.acheterProduit(-10, abraracourcix));
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		System.out.println("test 2.3 : ");
+		try {
+			System.out.println(etalTest3.acheterProduit(10, abraracourcix));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
 		
 		System.out.println("-----------------------------");
 		

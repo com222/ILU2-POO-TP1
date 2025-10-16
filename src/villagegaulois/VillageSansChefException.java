@@ -9,5 +9,8 @@ public class VillageSansChefException extends Exception{
 	}
 	public VillageSansChefException (Throwable cause) {
 		super(cause);
-	}	
+	}
+	public VillageSansChefException (Throwable cause, String message) {
+		super(message,cause);
+	}
 }
